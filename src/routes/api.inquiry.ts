@@ -16,4 +16,4 @@ export const Route = createFileRoute('/api/inquiry')({server:{handlers:{POST:asy
  // The provider handles delivery rate limits, suppression, and duplicate sends.
  // Return sent:true ONLY when that helper confirms sent:true.
  return Response.json({sent:false,code:'email_not_configured',message:'Email sending is not configured. Please contact Baraa directly or retry after setup.'},{status:503,headers:{'Cache-Control':'no-store'}});
-}}});
+}}}});
