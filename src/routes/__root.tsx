@@ -81,10 +81,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Baraa — Software Engineering & Quality Assurance" },
-      { name: "description", content: "Baraa Mahmoud Abu Watfa’s bilingual professional portfolio." },
+      {
+        name: "description",
+        content: "Baraa Mahmoud Abu Watfa’s bilingual professional portfolio.",
+      },
       { name: "author", content: "Baraa Mahmoud Abu Watfa" },
       { property: "og:title", content: "Baraa — Software Engineering & Quality Assurance" },
-      { property: "og:description", content: "Baraa Mahmoud Abu Watfa’s bilingual professional portfolio." },
+      {
+        property: "og:description",
+        content: "Baraa Mahmoud Abu Watfa’s bilingual professional portfolio.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -96,7 +102,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;750;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;750;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -125,7 +134,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <LanguageProvider><PortfolioLayout><Outlet /></PortfolioLayout></LanguageProvider>
+      <LanguageProvider>
+        <PortfolioLayout>
+          <Outlet />
+        </PortfolioLayout>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }
