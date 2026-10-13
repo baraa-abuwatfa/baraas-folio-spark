@@ -1,0 +1,224 @@
+import { useEffect, useRef } from "react";
+import { Link } from "@tanstack/react-router";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  BrainCircuit,
+  Code2,
+  FileText,
+  ShieldCheck,
+} from "lucide-react";
+import portrait from "@/assets/baraa-character.asset.json";
+import { Button } from "@/components/ui/button";
+import { bi } from "@/lib/portfolio-data";
+import { useLanguage } from "./portfolio-language";
+import { AboutSection, SkillsSection } from "./portfolio-sections";
+import { ProjectGrid } from "./portfolio-projects";
+import { ContactBand, SocialLinks } from "./portfolio-layout";
+export function PortfolioHome() {
+  const { t, language } = useLanguage();
+  const portraitRef = useRef<HTMLImageElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const image = portraitRef.current;
+      const hero = heroRef.current;
+      if (!image || !hero) return;
+      if (reduced.matches) {
+        image.style.transform = "none";
+        return;
+      }
+      const progress = Math.min(
+        1,
+        Math.max(0, -hero.getBoundingClientRect().top / hero.offsetHeight),
+      );
+      const mobile = window.innerWidth < 768;
+      image.style.transform = `rotateY(${progress * (mobile ? 14 : 30)}deg) scale(${1 - progress * (mobile ? 0.08 : 0.16)})`;
+    };
+    const scroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", scroll, { passive: true });
+    window.addEventListener("resize", scroll);
+    reduced.addEventListener("change", scroll);
+    return () => {
+      window.removeEventListener("scroll", scroll);
+      window.removeEventListener("resize", scroll);
+      reduced.removeEventListener("change", scroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+  return (
+    <>
+      <section className="hero" ref={heroRef}>
+        <div className="container hero-inner">
+          <div className="hero-copy reveal">
+            <span className="eyebrow">
+              {t(bi("SOFTWARE · QUALITY · POSSIBILITY", "برمجيات · جودة · إمكانيات"))}
+            </span>
+            <p className="hero-greeting">{t(bi("Hello, I’m", "مرحبًا، أنا"))}</p>
+            <h1>
+              {language === "en" ? (
+                <>
+                  <span className="hero-name">Baraa Mahmoud</span>
+                  <span className="hero-name name-accent">
+                    Abu Watfa<span>.</span>
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="hero-name">براء محمود</span>
+                  <span className="hero-name name-accent">أبو وطفة.</span>
+                </>
+              )}
+            </h1>
+            <div className="professional-title">
+              <span>{t(bi("Software Engineer", "مهندسة برمجيات"))}</span>
+              <span>{t(bi("QA Engineer", "مهندسة ضمان جودة"))}</span>
+              <span>{t(bi("AI & Automation", "الذكاء الاصطناعي والأتمتة"))}</span>
+            </div>
+            <h2 className="hero-headline">
+              {t(
+                bi(
+                  "Building Smart Solutions, One Idea at a Time.",
+                  "أبني حلولًا ذكية، فكرة بعد فكرة.",
+                ),
+              )}
+            </h2>
+            <p className="hero-description">
+              {t(
+                bi(
+                  "I’m a software engineering and QA professional passionate about software quality, thoughtful problem-solving, practical AI, and workflow automation. I combine analytical thinking with creative approaches to build organized, useful, and reliable digital solutions.",
+                  "أنا مهندسة برمجيات ومتخصصة في ضمان الجودة، أهتم بتحليل المشكلات، وتحسين جودة البرمجيات، واستخدام الذكاء الاصطناعي والأتمتة لبناء حلول عملية ومنظمة.",
+                ),
+              )}
+            </p>
+            <div className="hero-buttons">
+              <Button asChild size="lg">
+                <Link to="/projects">
+                  {t(bi("Explore My Work", "استكشف أعمالي"))}
+                  <ArrowUpRight className="rtl-arrow" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link to="/contact">
+                  {t(bi("Contact Me", "تواصل معي"))}
+                  <ArrowRight className="rtl-arrow" />
+                </Link>
+              </Button>
+            </div>
+            <div className="hero-socials">
+              <SocialLinks />
+              <span className="social-line" />
+              <small>{t(bi("Let’s connect", "لنتواصل"))}</small>
+            </div>
+          </div>
+          <div className="portrait-scene">
+            <div className="portrait-arch" />
+            <img
+              ref={portraitRef}
+              className="portrait-image"
+              src={portrait.url}
+              alt={t(
+                bi("Baraa’s uploaded illustrated portrait", "الصورة المرسومة التي قدمتها براء"),
+              )}
+              width={550}
+              height={900}
+              fetchPriority="high"
+            />
+            <div className="portrait-label">
+              <span className="dot" />
+              {t(bi("Ideas into impact", "من فكرة إلى أثر"))}
+            </div>
+            <div className="portrait-badge">
+              <ShieldCheck size={27} />
+              <div>
+                <strong>{t(bi("Quality in every detail", "الجودة في كل تفصيل"))}</strong>
+                <small>
+                  {t(bi("A thoughtful, testing-first mindset", "عقلية مدروسة تبدأ بالاختبار"))}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="container hero-bottom">
+          <span>
+            <ArrowDown size={13} />
+            {t(bi("A little more about me below", "المزيد عني أدناه"))}
+          </span>
+          <span>{t(bi("ENGINEERING WITH PURPOSE", "هندسة هادفة"))}</span>
+        </div>
+      </section>
+      <section className="focus-band">
+        <div className="container focus-grid">
+          {[
+            {
+              icon: ShieldCheck,
+              title: bi("Quality Assurance", "ضمان الجودة"),
+              sub: bi("Reliable, one test at a time", "موثوقية، اختبارًا بعد اختبار"),
+            },
+            {
+              icon: BrainCircuit,
+              title: bi("AI & Automation", "الذكاء الاصطناعي والأتمتة"),
+              sub: bi("Practical ideas. Smarter workflows.", "أفكار عملية وسير عمل أذكى"),
+            },
+            {
+              icon: FileText,
+              title: bi("Analysis & Documentation", "التحليل والتوثيق"),
+              sub: bi("Clarity from complexity", "وضوح من التعقيد"),
+            },
+            {
+              icon: Code2,
+              title: bi("Software Engineering", "هندسة البرمجيات"),
+              sub: bi("Thoughtful digital foundations", "أساسات رقمية مدروسة"),
+            },
+          ].map((item) => (
+            <div className="focus-item" key={item.title.en}>
+              <item.icon />
+              <div>
+                <strong>{t(item.title)}</strong>
+                <small>{t(item.sub)}</small>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      <AboutSection />
+      <SkillsSection />
+      <section className="section scroll-reveal">
+        <div className="container">
+          <div className="section-heading">
+            <div>
+              <span className="section-kicker">
+                {t(bi("A CLOSER LOOK AT MY WORK", "نظرة أقرب إلى أعمالي"))}
+              </span>
+              <h2>
+                {t(bi("Selected projects", "مشاريع مختارة"))}
+                <span className="text-primary">.</span>
+              </h2>
+              <p>
+                {t(
+                  bi(
+                    "Real projects. Organized thinking. A commitment to doing things well.",
+                    "مشاريع حقيقية وتفكير منظم والتزام بإتقان العمل.",
+                  ),
+                )}
+              </p>
+            </div>
+            <Link to="/projects" className="text-link">
+              {t(bi("View All Projects", "عرض جميع المشاريع"))}
+              <ArrowUpRight className="rtl-arrow" size={16} />
+            </Link>
+          </div>
+          <ProjectGrid featured />
+        </div>
+      </section>
+      <ContactBand />
+    </>
+  );
+}

@@ -1,0 +1,283 @@
+import { Link } from "@tanstack/react-router";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BrainCircuit,
+  CheckCheck,
+  ChevronDown,
+  Code2,
+  FileText,
+  GitBranch,
+  Github,
+  Linkedin,
+  Mail,
+  ShieldCheck,
+  Target,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { bi, identity, skillGroups } from "@/lib/portfolio-data";
+import { useLanguage } from "./portfolio-language";
+export function AboutSection({ standalone = false }: { standalone?: boolean }) {
+  const { t } = useLanguage();
+  return (
+    <section className={`section ${standalone ? "reveal" : "scroll-reveal"}`}>
+      <div className="container about-grid">
+        <div className="about-heading">
+          <span className="section-kicker">{t(bi("A LITTLE ABOUT ME", "نبذة عني"))}</span>
+          {standalone ? (
+            <h1 className="page-title">
+              {t(bi("Thoughtful by nature. Curious by choice.", "مدروسة بطبعي. فضولية باختياري."))}
+            </h1>
+          ) : (
+            <h2>
+              {t(bi("Thoughtful by nature. Curious by choice.", "مدروسة بطبعي. فضولية باختياري."))}
+            </h2>
+          )}
+          <p>
+            {t(
+              bi(
+                "I care about how things work—and how they can work better.",
+                "أهتم بكيفية عمل الأشياء، وكيف يمكن أن تعمل بشكل أفضل.",
+              ),
+            )}
+          </p>
+          {!standalone && (
+            <Link to="/about" className="text-link mt-6">
+              {t(bi("More About Me", "المزيد عني"))}
+              <ArrowUpRight className="rtl-arrow" size={16} />
+            </Link>
+          )}
+        </div>
+        <div className="about-body">
+          <p>
+            {t(
+              bi(
+                "I’m Baraa Mahmoud Abu Watfa, a software engineering and quality assurance professional interested in making digital experiences more useful, organized, and reliable. My work brings together analytical thinking, careful testing, and practical problem-solving.",
+                "أنا براء محمود أبو وطفة، مهندسة برمجيات ومتخصصة في ضمان الجودة. أهتم بجعل التجارب الرقمية أكثر فائدة وتنظيمًا وموثوقية. يجمع عملي بين التفكير التحليلي والاختبار الدقيق وحل المشكلات عمليًا.",
+              ),
+            )}
+          </p>
+          <p>
+            {t(
+              bi(
+                "My QA and system-analysis work at Devun in Gaza involved testing web and mobile applications, documenting system processes, preparing reports, tracking issues, monitoring workflows, and coordinating with teams. QA training at Gaza Sky Geeks strengthened my work with test cases, results, and issue follow-up.",
+                "شمل عملي في ضمان الجودة وتحليل الأنظمة لدى Devun في غزة اختبار تطبيقات الويب والهاتف وتوثيق عمليات الأنظمة وإعداد التقارير وتتبع المشكلات ومراقبة سير العمل والتنسيق مع الفرق. عزز تدريبي في Gaza Sky Geeks عملي مع حالات الاختبار والنتائج ومتابعة المشكلات.",
+              ),
+            )}
+          </p>
+          <p>
+            {t(
+              bi(
+                "I also explore practical AI, prompt engineering, and workflow automation. Front-end training at Gaza Municipality introduced me to web-based projects. Continuous learning and thoughtful process improvement guide the way I work.",
+                "أستكشف أيضًا الذكاء الاصطناعي العملي وهندسة الأوامر وأتمتة سير العمل. أتاح لي تدريب الواجهات الأمامية في بلدية غزة المشاركة في مشاريع الويب. يوجّه التعلم المستمر وتحسين العمليات المدروس طريقة عملي.",
+              ),
+            )}
+          </p>
+          <div className="about-principles">
+            {[
+              [ShieldCheck, bi("Quality comes first", "الجودة أولًا")],
+              [Target, bi("Clarity in every detail", "وضوح في كل تفصيل")],
+              [BrainCircuit, bi("Curiosity drives progress", "الفضول يدفع التقدم")],
+              [GitBranch, bi("Better processes, better outcomes", "عمليات أفضل، نتائج أفضل")],
+            ].map(([Icon, text], index) => {
+              const I = Icon as typeof ShieldCheck;
+              return (
+                <div key={index} className="principle">
+                  <I />
+                  {t(text as ReturnType<typeof bi>)}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+const icons = [ShieldCheck, BrainCircuit, FileText, Code2];
+export function SkillsSection({ standalone = false }: { standalone?: boolean }) {
+  const { t } = useLanguage();
+  return (
+    <section className={`section alternate ${standalone ? "reveal" : "scroll-reveal"}`}>
+      <div className="container">
+        <div className="section-heading">
+          <div>
+            <span className="section-kicker">{t(bi("WHAT I BRING TO THE TABLE", "ما أقدمه"))}</span>
+            {standalone ? (
+              <h1 className="page-title">
+                {t(bi("Skills with purpose", "مهارات هادفة"))}
+                <span className="text-primary">.</span>
+              </h1>
+            ) : (
+              <h2>
+                {t(bi("Skills with purpose", "مهارات هادفة"))}
+                <span className="text-primary">.</span>
+              </h2>
+            )}
+            <p>
+              {t(
+                bi(
+                  "A testing-first mindset, supported by practical AI, organized analysis, and a foundation in software engineering.",
+                  "عقلية تبدأ بالاختبار، تدعمها قدرات عملية في الذكاء الاصطناعي والتحليل المنظم وأساسيات هندسة البرمجيات.",
+                ),
+              )}
+            </p>
+          </div>
+          {!standalone && (
+            <Link to="/skills" className="text-link">
+              {t(bi("Explore My Skills", "استكشف مهاراتي"))}
+              <ArrowRight className="rtl-arrow" size={16} />
+            </Link>
+          )}
+        </div>
+        <div className="skills-grid">
+          {skillGroups.map((group, index) => {
+            const Icon = icons[index] ?? ShieldCheck;
+            return (
+              <details
+                key={index}
+                className={`skill-group ${index === 0 ? "primary-group" : ""}`}
+                open={standalone || index === 0}
+              >
+                <summary>
+                  <span className="skill-icon">
+                    <Icon size={23} />
+                  </span>
+                  <div>
+                    <h3>{t(group.title)}</h3>
+                    <p>{t(group.description)}</p>
+                  </div>
+                  <ChevronDown className="expand-icon" />
+                </summary>
+                <div className="skill-categories">
+                  {group.categories.map((category, index) => (
+                    <span key={index} className="category-tag">
+                      {t(category)}
+                    </span>
+                  ))}
+                </div>
+                <div className="skill-tags">
+                  {group.skills.map((skill, index) => (
+                    <span className="skill-tag" key={index}>
+                      {t(skill)}
+                    </span>
+                  ))}
+                </div>
+                {group.note && <p className="skill-note">{t(group.note)}</p>}
+              </details>
+            );
+          })}
+        </div>
+        <div className="featured-skills">
+          <div className="featured-skill">
+            <h3>
+              <CheckCheck size={18} />
+              {t(bi("Test Case Design", "تصميم حالات الاختبار"))}
+            </h3>
+            <p>
+              {t(
+                bi(
+                  "Designing clear, structured, and reusable test cases to validate application behavior and organize test execution.",
+                  "تصميم حالات اختبار واضحة ومنظمة وقابلة لإعادة الاستخدام للتحقق من سلوك التطبيق وتنظيم تنفيذ الاختبارات.",
+                ),
+              )}
+            </p>
+          </div>
+          <div className="featured-skill">
+            <h3>
+              <FileText size={18} />
+              {t(bi("Bug Reporting", "تقارير الأخطاء"))}
+            </h3>
+            <p>
+              {t(
+                bi(
+                  "Documenting software issues with clear steps to reproduce, expected and actual results, supporting evidence when available, and issue status.",
+                  "توثيق مشكلات البرمجيات بخطوات واضحة لإعادة إنتاجها والنتائج المتوقعة والفعلية والأدلة عند توفرها وحالة المشكلة.",
+                ),
+              )}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+export function ContactPage() {
+  const { t } = useLanguage();
+  return (
+    <div className="container reveal">
+      <header className="page-header">
+        <span className="eyebrow">{t(bi("LET’S START A CONVERSATION", "لنبدأ حوارًا"))}</span>
+        <h1 className="page-title">
+          {t(bi("Let’s build something meaningful", "لنصنع شيئًا ذا معنى"))}
+          <span className="text-primary">.</span>
+        </h1>
+        <p className="page-intro">
+          {t(
+            bi(
+              "A project, an opportunity, or simply a hello. I’d love to hear from you.",
+              "مشروع أو فرصة أو مجرد تحية. يسعدني التواصل معك.",
+            ),
+          )}
+        </p>
+      </header>
+      <div className="contact-grid">
+        <div>
+          <h2>{t(bi("Good work starts with a conversation.", "العمل الجيد يبدأ بحوار."))}</h2>
+          <p>
+            {t(
+              bi(
+                "For job opportunities, freelance collaboration, or a project idea, connect with me directly. For a detailed request, Baraa’s Assistant can help you organize and review your inquiry.",
+                "لفرص العمل أو التعاون الحر أو أفكار المشاريع، تواصل معي مباشرة. للطلبات التفصيلية، يساعدك مساعد براء على تنظيم طلبك ومراجعته.",
+              ),
+            )}
+          </p>
+          <Button
+            size="lg"
+            onClick={() => document.querySelector<HTMLButtonElement>(".chat-launcher")?.click()}
+          >
+            {t(bi("Submit a Project Inquiry", "اطلب تنفيذ مشروع"))}
+            <ArrowUpRight className="rtl-arrow" />
+          </Button>
+        </div>
+        <div className="contact-links">
+          {[
+            {
+              icon: Mail,
+              name: bi("Email", "البريد الإلكتروني"),
+              value: identity.email,
+              url: `mailto:${identity.email}`,
+            },
+            {
+              icon: Linkedin,
+              name: bi("LinkedIn", "LinkedIn"),
+              value: "Baraa Abu Watfa",
+              url: identity.linkedin,
+            },
+            {
+              icon: Github,
+              name: bi("GitHub", "GitHub"),
+              value: "Baraa-abuwatfa",
+              url: identity.github,
+            },
+          ].map((item) => (
+            <a
+              className="contact-row"
+              key={item.value}
+              href={item.url}
+              target={item.url.startsWith("mailto") ? undefined : "_blank"}
+              rel={item.url.startsWith("mailto") ? undefined : "noopener noreferrer"}
+            >
+              <item.icon size={22} />
+              <div>
+                <small>{t(item.name)}</small>
+                <strong dir="ltr">{item.value}</strong>
+              </div>
+              <ArrowUpRight className="outward rtl-arrow" size={17} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
