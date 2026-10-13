@@ -14,4 +14,9 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
+
+  it.each(["/about", "/skills", "/projects", "/contact", "/projects/kaya-store-qa", "/projects/lawyer-application-qa", "/projects/gaza-sky-geeks-qa", "/projects/task-delay-alert-system", "/projects/ai-creative-studio"])("matches the portfolio page %s", (path) => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+    expect(router.matchRoutes(path).at(-1)?.routeId).not.toBe(rootRouteId);
+  });
 });

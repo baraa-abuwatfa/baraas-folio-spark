@@ -1391,12 +1391,12 @@
     min-height: 0;
   }
   .hero-copy {
-    padding: 45px 0 18px;
+    padding: 30px 0 12px;
     width: 100%;
     text-align: start;
   }
   .hero h1 {
-    font-size: 46px;
+    font-size: 36px;
     max-width: 500px;
   }
   .hero-greeting {
@@ -1421,7 +1421,7 @@
   }
   .hero-description {
     font-size: 12px;
-    line-height: 1.9;
+    line-height: 1.75;
   }
   .hero-buttons {
     gap: 10px;
@@ -1436,16 +1436,16 @@
     margin-top: 22px;
   }
   .portrait-scene {
-    height: 340px;
+    height: 270px;
     width: 100%;
     margin-top: 10px;
   }
   .portrait-image {
-    height: 335px;
+    height: 265px;
   }
   .portrait-arch {
-    width: 244px;
-    height: 275px;
+    width: 210px;
+    height: 225px;
   }
   .portrait-badge {
     bottom: 58px;
@@ -1712,7 +1712,7 @@
     width: calc(100% - 32px);
   }
   .hero h1 {
-    font-size: 40px;
+    font-size: 31px;
   }
   .hero-headline {
     font-size: 19px;
