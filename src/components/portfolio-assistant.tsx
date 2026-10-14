@@ -5,7 +5,11 @@ import portrait from "@/assets/baraa-character.asset.json";
 import { bi, identity, services } from "@/lib/portfolio-data";
 import { inquirySchema } from "@/lib/inquiry-schema";
 import { useLanguage } from "./portfolio-language";
-type View = "welcome" | "services" | "service" | "form" | "review" | "contact" | "success";
+import { answerCvQuestion, cvMissing, cvTopics } from "@/lib/cv-profile";
+import { UserRound } from "lucide-react";
+type View =
+  "welcome" | "services" | "service" | "form" | "review" | "contact" | "success" | "about";
+type CvTurn = { q: string; topic: number | null };
 const initial = {
   service: "",
   title: "",
@@ -27,6 +31,21 @@ export function PortfolioAssistant() {
   const [sending, setSending] = useState(false);
   const [freeText, setFreeText] = useState("");
   const [fallback, setFallback] = useState(false);
+  const [cvTurns, setCvTurns] = useState<CvTurn[]>([]);
+  const [cvText, setCvText] = useState("");
+  const [cvPicking, setCvPicking] = useState(true);
+  const askCv = (q: string, topic: number | null) => {
+    setCvTurns((prev) => [...prev, { q, topic }]);
+    setCvPicking(false);
+  };
+  const submitCv = (event: FormEvent) => {
+    event.preventDefault();
+    const q = cvText.trim();
+    if (!q) return;
+    const match = answerCvQuestion(q);
+    askCv(q, match ? cvTopics.indexOf(match) : null);
+    setCvText("");
+  };
   const launcher = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLElement>(null);
   const first = useRef<HTMLButtonElement>(null);
@@ -207,6 +226,16 @@ export function PortfolioAssistant() {
                     {t(bi("Contact Baraa", "تواصل مع براء"))}
                     <Mail />
                   </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setCvPicking(true);
+                      setView("about");
+                    }}
+                  >
+                    {t(bi("About Baraa", "عن براء"))}
+                    <UserRound />
+                  </Button>
                 </div>
                 <form className="chat-input" onSubmit={ask}>
                   <input
@@ -226,6 +255,71 @@ export function PortfolioAssistant() {
                     <Send />
                   </Button>
                 </form>
+              </>
+            )}
+            {view === "about" && (
+              <>
+                <p className="assistant-text">
+                  {t(
+                    bi(
+                      "Ask me about Baraa’s professional background — experience, training, education, skills, volunteering, and certificates. Answers come from Baraa’s CV.",
+                      "اسألني عن الخلفية المهنية لبراء — الخبرة والتدريب والتعليم والمهارات والتطوع والشهادات. الإجابات مأخوذة من سيرتها الذاتية.",
+                    ),
+                  )}
+                </p>
+                {cvTurns.map((turn, index) => (
+                  <div key={index}>
+                    <p className="chat-service-title">{turn.q}</p>
+                    <p className="assistant-text" style={{ whiteSpace: "pre-line" }}>
+                      {t(turn.topic === null ? cvMissing : cvTopics[turn.topic]!.answer)}
+                    </p>
+                  </div>
+                ))}
+                {cvPicking ? (
+                  <>
+                    <div className="chat-options">
+                      {cvTopics.map((topic, index) => (
+                        <Button
+                          key={index}
+                          variant="outline"
+                          onClick={() => askCv(t(topic.question), index)}
+                        >
+                          {t(topic.question)}
+                          <ArrowRight className="rtl-arrow" />
+                        </Button>
+                      ))}
+                    </div>
+                    <form className="chat-input" onSubmit={submitCv}>
+                      <input
+                        value={cvText}
+                        onChange={(event) => setCvText(event.target.value)}
+                        maxLength={300}
+                        placeholder={t(bi("Ask about Baraa…", "اسأل عن براء…"))}
+                        aria-label={t(bi("Question about Baraa", "سؤال عن براء"))}
+                      />
+                      <Button
+                        type="submit"
+                        size="icon"
+                        aria-label={t(bi("Send question", "إرسال السؤال"))}
+                      >
+                        <Send />
+                      </Button>
+                    </form>
+                  </>
+                ) : (
+                  <div className="chat-options">
+                    <Button onClick={() => setCvPicking(true)}>
+                      {t(bi("Continue Conversation", "متابعة المحادثة"))}
+                      <MessageCircle />
+                    </Button>
+                  </div>
+                )}
+                <div className="chat-actions">
+                  <Button variant="ghost" onClick={() => setView("welcome")}>
+                    <ChevronLeft className="rtl-arrow" />
+                    {t(bi("Back to Chatbot Options", "العودة إلى خيارات المساعد"))}
+                  </Button>
+                </div>
               </>
             )}
             {view === "services" && (
@@ -512,14 +606,18 @@ export function PortfolioAssistant() {
                 </Button>
               </>
             )}
-            {view !== "welcome" && view !== "form" && view !== "review" && view !== "success" && (
-              <div className="chat-actions">
-                <Button variant="ghost" onClick={() => setView("welcome")}>
-                  <ChevronLeft className="rtl-arrow" />
-                  {t(bi("Back", "رجوع"))}
-                </Button>
-              </div>
-            )}
+            {view !== "welcome" &&
+              view !== "form" &&
+              view !== "review" &&
+              view !== "success" &&
+              view !== "about" && (
+                <div className="chat-actions">
+                  <Button variant="ghost" onClick={() => setView("welcome")}>
+                    <ChevronLeft className="rtl-arrow" />
+                    {t(bi("Back", "رجوع"))}
+                  </Button>
+                </div>
+              )}
           </div>
         </section>
       )}
