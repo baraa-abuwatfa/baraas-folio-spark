@@ -8,14 +8,7 @@ import { useLanguage } from "./portfolio-language";
 import { answerCvQuestion, cvMissing, cvTopics } from "@/lib/cv-profile";
 import { UserRound } from "lucide-react";
 type View =
-  | "welcome"
-  | "services"
-  | "service"
-  | "form"
-  | "review"
-  | "contact"
-  | "success"
-  | "about";
+  "welcome" | "services" | "service" | "form" | "review" | "contact" | "success" | "about";
 type CvTurn = { q: string; topic: number | null };
 const initial = {
   service: "",
@@ -613,14 +606,18 @@ export function PortfolioAssistant() {
                 </Button>
               </>
             )}
-            {view !== "welcome" && view !== "form" && view !== "review" && view !== "success" && (
-              <div className="chat-actions">
-                <Button variant="ghost" onClick={() => setView("welcome")}>
-                  <ChevronLeft className="rtl-arrow" />
-                  {t(bi("Back", "رجوع"))}
-                </Button>
-              </div>
-            )}
+            {view !== "welcome" &&
+              view !== "form" &&
+              view !== "review" &&
+              view !== "success" &&
+              view !== "about" && (
+                <div className="chat-actions">
+                  <Button variant="ghost" onClick={() => setView("welcome")}>
+                    <ChevronLeft className="rtl-arrow" />
+                    {t(bi("Back", "رجوع"))}
+                  </Button>
+                </div>
+              )}
           </div>
         </section>
       )}
