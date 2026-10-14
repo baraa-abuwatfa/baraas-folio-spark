@@ -5,7 +5,18 @@ import portrait from "@/assets/baraa-character.asset.json";
 import { bi, identity, services } from "@/lib/portfolio-data";
 import { inquirySchema } from "@/lib/inquiry-schema";
 import { useLanguage } from "./portfolio-language";
-type View = "welcome" | "services" | "service" | "form" | "review" | "contact" | "success";
+import { answerCvQuestion, cvMissing, cvTopics } from "@/lib/cv-profile";
+import { UserRound } from "lucide-react";
+type View =
+  | "welcome"
+  | "services"
+  | "service"
+  | "form"
+  | "review"
+  | "contact"
+  | "success"
+  | "about";
+type CvTurn = { q: string; topic: number | null };
 const initial = {
   service: "",
   title: "",
@@ -27,6 +38,21 @@ export function PortfolioAssistant() {
   const [sending, setSending] = useState(false);
   const [freeText, setFreeText] = useState("");
   const [fallback, setFallback] = useState(false);
+  const [cvTurns, setCvTurns] = useState<CvTurn[]>([]);
+  const [cvText, setCvText] = useState("");
+  const [cvPicking, setCvPicking] = useState(true);
+  const askCv = (q: string, topic: number | null) => {
+    setCvTurns((prev) => [...prev, { q, topic }]);
+    setCvPicking(false);
+  };
+  const submitCv = (event: FormEvent) => {
+    event.preventDefault();
+    const q = cvText.trim();
+    if (!q) return;
+    const match = answerCvQuestion(q);
+    askCv(q, match ? cvTopics.indexOf(match) : null);
+    setCvText("");
+  };
   const launcher = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLElement>(null);
   const first = useRef<HTMLButtonElement>(null);
@@ -206,6 +232,16 @@ export function PortfolioAssistant() {
                   <Button variant="outline" onClick={() => setView("contact")}>
                     {t(bi("Contact Baraa", "تواصل مع براء"))}
                     <Mail />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setCvPicking(true);
+                      setView("about");
+                    }}
+                  >
+                    {t(bi("About Baraa", "عن براء"))}
+                    <UserRound />
                   </Button>
                 </div>
                 <form className="chat-input" onSubmit={ask}>
