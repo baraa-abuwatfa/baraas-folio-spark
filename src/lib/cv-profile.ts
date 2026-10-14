@@ -1,4 +1,4 @@
-import { bi, type Bi } from "@/lib/portfolio-data";
+import { bi, type Bilingual as Bi } from "@/lib/portfolio-data";
 
 /** Structured facts taken only from Baraa's uploaded CV. Questions are derived from this data. */
 type Entry = { title: Bi; org: Bi; period: string; kind: "work" | "training"; points: Bi[] };
