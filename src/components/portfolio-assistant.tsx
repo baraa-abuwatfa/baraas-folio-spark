@@ -264,6 +264,71 @@ export function PortfolioAssistant() {
                 </form>
               </>
             )}
+            {view === "about" && (
+              <>
+                <p className="assistant-text">
+                  {t(
+                    bi(
+                      "Ask me about Baraa’s professional background — experience, training, education, skills, volunteering, and certificates. Answers come from Baraa’s CV.",
+                      "اسألني عن الخلفية المهنية لبراء — الخبرة والتدريب والتعليم والمهارات والتطوع والشهادات. الإجابات مأخوذة من سيرتها الذاتية.",
+                    ),
+                  )}
+                </p>
+                {cvTurns.map((turn, index) => (
+                  <div key={index}>
+                    <p className="chat-service-title">{turn.q}</p>
+                    <p className="assistant-text" style={{ whiteSpace: "pre-line" }}>
+                      {t(turn.topic === null ? cvMissing : cvTopics[turn.topic]!.answer)}
+                    </p>
+                  </div>
+                ))}
+                {cvPicking ? (
+                  <>
+                    <div className="chat-options">
+                      {cvTopics.map((topic, index) => (
+                        <Button
+                          key={index}
+                          variant="outline"
+                          onClick={() => askCv(t(topic.question), index)}
+                        >
+                          {t(topic.question)}
+                          <ArrowRight className="rtl-arrow" />
+                        </Button>
+                      ))}
+                    </div>
+                    <form className="chat-input" onSubmit={submitCv}>
+                      <input
+                        value={cvText}
+                        onChange={(event) => setCvText(event.target.value)}
+                        maxLength={300}
+                        placeholder={t(bi("Ask about Baraa…", "اسأل عن براء…"))}
+                        aria-label={t(bi("Question about Baraa", "سؤال عن براء"))}
+                      />
+                      <Button
+                        type="submit"
+                        size="icon"
+                        aria-label={t(bi("Send question", "إرسال السؤال"))}
+                      >
+                        <Send />
+                      </Button>
+                    </form>
+                  </>
+                ) : (
+                  <div className="chat-options">
+                    <Button onClick={() => setCvPicking(true)}>
+                      {t(bi("Continue Conversation", "متابعة المحادثة"))}
+                      <MessageCircle />
+                    </Button>
+                  </div>
+                )}
+                <div className="chat-actions">
+                  <Button variant="ghost" onClick={() => setView("welcome")}>
+                    <ChevronLeft className="rtl-arrow" />
+                    {t(bi("Back to Chatbot Options", "العودة إلى خيارات المساعد"))}
+                  </Button>
+                </div>
+              </>
+            )}
             {view === "services" && (
               <>
                 <p className="assistant-text">
