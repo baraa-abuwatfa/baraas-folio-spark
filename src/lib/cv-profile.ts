@@ -79,7 +79,7 @@ function build(): Topic[] {
         `${work ? "خبرة مهنية" : "تدريب"} — ${e.title.ar}، ${e.org.ar} (${e.period}):\n${list(e.points.map((p) => p.ar))}`,
       ),
       keywords: new RegExp(
-        e.org.en.split(",")[0].toLowerCase() +
+        (e.org.en.split(",")[0] ?? "").toLowerCase() +
           (work
             ? "|experience|job|work|system analyst|خبرة|عمل|وظيف"
             : e.title.en.includes("Front")
