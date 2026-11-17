@@ -746,6 +746,40 @@
 .project-content {
   padding: 23px;
 }
+.project-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.project-status {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: var(--brand);
+  border: 1px solid color-mix(in oklab, var(--brand) 35%, transparent);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+.project-tech {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+}
+.project-tech li {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
 .project-category {
   font-size: 8px;
   font-weight: 700;

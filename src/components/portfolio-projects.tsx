@@ -56,13 +56,21 @@ export function ProjectCard({ project }: { project: Project }) {
         <ProjectCover project={project} />
       </Link>
       <div className="project-content">
-        <span className="project-category">
-          {t(categories[project.category] ?? bi("Project", "مشروع"))}
-        </span>
+        <div className="project-meta">
+          <span className="project-category">
+            {t(categories[project.category] ?? bi("Project", "مشروع"))}
+          </span>
+          <span className="project-status">{t(project.status)}</span>
+        </div>
         <h3>{t(project.shortTitle)}</h3>
         <p>{t(project.description)}</p>
+        <ul className="project-tech" aria-label={t(bi("Technologies used", "التقنيات المستخدمة"))}>
+          {project.technologies.map((technology, index) => (
+            <li key={index}>{t(technology)}</li>
+          ))}
+        </ul>
         <Link className="text-link" to="/projects/$projectId" params={{ projectId: project.id }}>
-          {t(bi("View Project", "عرض المشروع"))}
+          {t(bi("View Case Study", "عرض دراسة الحالة"))}
           <ArrowUpRight className="rtl-arrow" size={15} />
         </Link>
       </div>

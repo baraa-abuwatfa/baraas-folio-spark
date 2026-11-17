@@ -20,6 +20,8 @@ export interface Project {
   category: number;
   description: Bilingual;
   cover: "kaya" | "lawyer" | "audit" | "workflow" | "creative";
+  technologies: Bilingual[];
+  status: Bilingual;
   doc?: string;
   sections: { title: Bilingual; body: Bilingual }[];
 }
@@ -38,6 +40,13 @@ export const projects: Project[] = [
       "Structured testing and issue documentation for a skincare e-commerce experience.",
       "اختبارات منظمة وتوثيق الملاحظات لتجربة متجر إلكتروني لمنتجات العناية بالبشرة.",
     ),
+    technologies: [
+      bi("Manual Testing", "الاختبار اليدوي"),
+      bi("Issue Tracking", "تتبع المشكلات"),
+      bi("Test Documentation", "توثيق الاختبارات"),
+      bi("Google Sheets", "جداول Google"),
+    ],
+    status: bi("Completed", "مكتمل"),
     doc: "https://docs.google.com/spreadsheets/d/1XJ1hyKiaE4whCvYa_qDbmgy9qJkfYeRugdgEyer68UU/edit?usp=drivesdk",
     sections: [
       section(
@@ -103,6 +112,13 @@ export const projects: Project[] = [
       "Test scenarios, execution statuses, and structured analysis for a lawyer application.",
       "سيناريوهات الاختبار وحالات التنفيذ والتحليل المنظم لتطبيق المحامين.",
     ),
+    technologies: [
+      bi("Mobile Testing (Android)", "اختبار الهاتف (Android)"),
+      bi("Test Scenarios", "سيناريوهات الاختبار"),
+      bi("Execution Analysis", "تحليل التنفيذ"),
+      bi("Google Sheets", "جداول Google"),
+    ],
+    status: bi("Completed", "مكتمل"),
     doc: "https://docs.google.com/spreadsheets/d/1FXW2QwSdIu88POlhgySwgmJ0HkSAKsePk2gGunRgK2s/edit?usp=drivesdk",
     sections: [
       section(
@@ -180,6 +196,13 @@ export const projects: Project[] = [
       "Practical test documentation and progress analysis from QA training at Gaza Sky Geeks.",
       "توثيق عملي للاختبارات وتحليل التقدم خلال تدريب ضمان الجودة في Gaza Sky Geeks.",
     ),
+    technologies: [
+      bi("Website Testing", "اختبار المواقع"),
+      bi("Test Case Management", "إدارة حالات الاختبار"),
+      bi("Bug Reporting", "تقارير الأخطاء"),
+      bi("Google Sheets", "جداول Google"),
+    ],
+    status: bi("Completed", "مكتمل"),
     doc: "https://docs.google.com/spreadsheets/d/1uGvIMjOhHotkWHUXd7egn2IBwFm2RWuNtpDNucDDQZE/edit?usp=drivesdk",
     sections: [
       section(
@@ -254,6 +277,12 @@ export const projects: Project[] = [
       "A workflow concept for detecting overdue tasks and supporting timely email follow-up.",
       "تصور لسير عمل يكتشف المهام المتأخرة ويدعم المتابعة عبر البريد الإلكتروني.",
     ),
+    technologies: [
+      bi("Workflow Automation", "أتمتة سير العمل"),
+      bi("Email Alerts", "تنبيهات البريد الإلكتروني"),
+      bi("Process Design", "تصميم العمليات"),
+    ],
+    status: bi("Workflow Design", "تصميم سير عمل"),
     sections: [
       section(
         "Project Overview",
@@ -330,6 +359,13 @@ export const projects: Project[] = [
       "Creative direction, prompt engineering, and AI-assisted visual storytelling.",
       "توجيه إبداعي وهندسة أوامر وسرد بصري بمساعدة الذكاء الاصطناعي.",
     ),
+    technologies: [
+      bi("Prompt Engineering", "هندسة الأوامر"),
+      bi("AI Image Creation", "إنشاء الصور بالذكاء الاصطناعي"),
+      bi("AI Video Creation", "إنشاء الفيديو بالذكاء الاصطناعي"),
+      bi("Creative Direction", "التوجيه الإبداعي"),
+    ],
+    status: bi("In Progress", "قيد التنفيذ"),
     sections: [
       section(
         "Project Overview",
