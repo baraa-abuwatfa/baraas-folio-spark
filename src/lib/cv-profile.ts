@@ -3,7 +3,7 @@ import { bi, type Bilingual as Bi } from "@/lib/portfolio-data";
 /** Structured facts taken only from Baraa's uploaded CV. Questions are derived from this data. */
 type Entry = { title: Bi; org: Bi; period: string; kind: "work" | "training"; points: Bi[] };
 
-const experience: Entry[] = [
+export const experience: Entry[] = [
   {
     title: bi("Quality Assurance Engineer & System Analyst", "مهندسة ضمان جودة ومحللة أنظمة"),
     org: bi("Devun Company, Gaza", "شركة Devun، غزة"),
