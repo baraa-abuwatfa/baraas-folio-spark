@@ -78,9 +78,8 @@ export function PortfolioHome() {
               )}
             </h1>
             <div className="professional-title">
+              <span>{t(bi("AI Automation Developer", "مطوّرة أتمتة بالذكاء الاصطناعي"))}</span>
               <span>{t(bi("Software Engineer", "مهندسة برمجيات"))}</span>
-              <span>{t(bi("QA Engineer", "مهندسة ضمان جودة"))}</span>
-              <span>{t(bi("AI & Automation", "الذكاء الاصطناعي والأتمتة"))}</span>
             </div>
             <h2 className="hero-headline">
               {t(

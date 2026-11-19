@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, Check, ChevronLeft, Mail, MessageCircle, Send, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import portrait from "@/assets/baraa-character.asset.json";
-import { bi, identity, services } from "@/lib/portfolio-data";
+import { bi } from "@/lib/portfolio-data";
+import { useContent } from "@/lib/content-query";
 import { inquirySchema } from "@/lib/inquiry-schema";
 import { useLanguage } from "./portfolio-language";
 import { answerCvQuestion, cvMissing, cvTopics } from "@/lib/cv-profile";
@@ -22,6 +23,7 @@ const initial = {
 };
 export function PortfolioAssistant() {
   const { t, language, setLanguage } = useLanguage();
+  const { identity, services } = useContent();
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<View>("welcome");
   const [selected, setSelected] = useState(0);

@@ -2,11 +2,13 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { ArrowUpRight, Github, Linkedin, Mail, Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { bi, identity } from "@/lib/portfolio-data";
+import { bi } from "@/lib/portfolio-data";
+import { useContent } from "@/lib/content-query";
 import { useLanguage } from "./portfolio-language";
 import { PortfolioAssistant } from "./portfolio-assistant";
 export function SocialLinks() {
   const { t } = useLanguage();
+  const { identity } = useContent();
   return (
     <>
       <a
@@ -41,6 +43,7 @@ const navItems = [
   { to: "/" as const, label: bi("Home", "الرئيسية") },
   { to: "/about" as const, label: bi("About", "عني") },
   { to: "/skills" as const, label: bi("Skills", "المهارات") },
+  { to: "/experience" as const, label: bi("Experience", "الخبرات") },
   { to: "/projects" as const, label: bi("Projects", "المشاريع") },
   { to: "/contact" as const, label: bi("Contact", "التواصل") },
 ];

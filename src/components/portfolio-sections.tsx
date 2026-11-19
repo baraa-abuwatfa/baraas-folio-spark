@@ -4,6 +4,7 @@ import {
   ArrowUpRight,
   BrainCircuit,
   CheckCheck,
+  Download,
   ChevronDown,
   Code2,
   FileText,
@@ -15,7 +16,8 @@ import {
   Target,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { bi, identity, skillGroups } from "@/lib/portfolio-data";
+import { bi, cvFile } from "@/lib/portfolio-data";
+import { useContent } from "@/lib/content-query";
 import { useLanguage } from "./portfolio-language";
 export function AboutSection({ standalone = false }: { standalone?: boolean }) {
   const { t } = useLanguage();
@@ -41,12 +43,20 @@ export function AboutSection({ standalone = false }: { standalone?: boolean }) {
               ),
             )}
           </p>
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            <Button asChild variant="outline">
+              <a href={cvFile} download="Baraa_AbuWatfa_CV.pdf">
+                <Download size={16} />
+                {t(bi("Download CV", "تحميل السيرة الذاتية"))}
+              </a>
+            </Button>
           {!standalone && (
-            <Link to="/about" className="text-link mt-6">
+            <Link to="/about" className="text-link">
               {t(bi("More About Me", "المزيد عني"))}
               <ArrowUpRight className="rtl-arrow" size={16} />
             </Link>
           )}
+          </div>
         </div>
         <div className="about-body">
           <p>
@@ -97,6 +107,7 @@ export function AboutSection({ standalone = false }: { standalone?: boolean }) {
 const icons = [ShieldCheck, BrainCircuit, FileText, Code2];
 export function SkillsSection({ standalone = false }: { standalone?: boolean }) {
   const { t } = useLanguage();
+  const { skillGroups } = useContent();
   return (
     <section className={`section alternate ${standalone ? "reveal" : "scroll-reveal"}`}>
       <div className="container">
@@ -203,6 +214,7 @@ export function SkillsSection({ standalone = false }: { standalone?: boolean }) 
   );
 }
 export function ContactPage() {
+  const { identity } = useContent();
   const { t } = useLanguage();
   return (
     <div className="container reveal">
@@ -279,5 +291,63 @@ export function ContactPage() {
         </div>
       </div>
     </div>
+  );
+}
+export function ExperienceSection() {
+  const { t } = useLanguage();
+  const { experience } = useContent();
+  return (
+    <section className="section reveal">
+      <div className="container">
+        <div className="section-heading">
+          <div>
+            <span className="section-kicker">{t(bi("WHERE I’VE WORKED AND TRAINED", "أين عملت وتدربت"))}</span>
+            <h1 className="page-title">
+              {t(bi("Experience", "الخبرات"))}
+              <span className="text-primary">.</span>
+            </h1>
+            <p>
+              {t(
+                bi(
+                  "Professional experience and training, as listed in my CV.",
+                  "الخبرة المهنية والتدريب كما وردت في سيرتي الذاتية.",
+                ),
+              )}
+            </p>
+          </div>
+          <Button asChild variant="outline">
+            <a href={cvFile} download="Baraa_AbuWatfa_CV.pdf">
+              <Download size={16} />
+              {t(bi("Download CV", "تحميل السيرة الذاتية"))}
+            </a>
+          </Button>
+        </div>
+        <div className="skills-grid">
+          {experience.map((entry, index) => (
+            <article key={index} className={`skill-group ${index === 0 ? "primary-group" : ""}`}>
+              <div className="skill-categories">
+                <span className="category-tag">
+                  {entry.kind === "work"
+                    ? t(bi("Professional experience", "خبرة مهنية"))
+                    : t(bi("Training", "تدريب"))}
+                </span>
+                <span className="category-tag" dir="ltr">
+                  {entry.period}
+                </span>
+              </div>
+              <h2 className="text-xl font-bold text-foreground">{t(entry.title)}</h2>
+              <p className="mb-4 mt-1 text-sm text-muted-foreground">{t(entry.org)}</p>
+              <ul className="skill-tags">
+                {entry.points.map((point, i) => (
+                  <li className="skill-tag" key={i}>
+                    {t(point)}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

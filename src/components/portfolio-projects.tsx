@@ -10,7 +10,8 @@ import {
   Scale,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { bi, categories, projects, type Project } from "@/lib/portfolio-data";
+import { bi, type Project } from "@/lib/portfolio-data";
+import { useContent } from "@/lib/content-query";
 import { useLanguage } from "./portfolio-language";
 export function ProjectCover({ project, detail = false }: { project: Project; detail?: boolean }) {
   const { t } = useLanguage();
@@ -45,6 +46,7 @@ export function ProjectCover({ project, detail = false }: { project: Project; de
 }
 export function ProjectCard({ project }: { project: Project }) {
   const { t } = useLanguage();
+  const { categories, projects } = useContent();
   return (
     <article className="project-card">
       <Link
@@ -78,6 +80,7 @@ export function ProjectCard({ project }: { project: Project }) {
   );
 }
 export function ProjectGrid({ featured = false }: { featured?: boolean }) {
+  const { projects } = useContent();
   return (
     <div className="projects-grid">
       {(featured ? projects.slice(0, 3) : projects).map((project) => (
@@ -88,6 +91,7 @@ export function ProjectGrid({ featured = false }: { featured?: boolean }) {
 }
 export function ProjectsPage() {
   const { t } = useLanguage();
+  const { categories, projects } = useContent();
   const [filter, setFilter] = useState(0);
   return (
     <div className="container project-bottom reveal">
@@ -149,6 +153,7 @@ const gallery = [
 ];
 export function ProjectDetail({ project }: { project: Project }) {
   const { t } = useLanguage();
+  const { categories, projects } = useContent();
   const [galleryFilter, setGalleryFilter] = useState(0);
   const index = projects.findIndex((item) => item.id === project.id);
   const prev = projects[(index + projects.length - 1) % projects.length] ?? project;

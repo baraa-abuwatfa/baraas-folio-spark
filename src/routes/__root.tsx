@@ -9,6 +9,8 @@ import {
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { contentQuery } from "@/lib/content-query";
+import { supabase } from "@/integrations/supabase/client";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -76,17 +78,18 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  loader: ({ context }) => context.queryClient.ensureQueryData(contentQuery),
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Baraa — Software Engineering & Quality Assurance" },
+      { title: "Baraa — AI Automation Developer & Software Engineer" },
       {
         name: "description",
         content: "Baraa Mahmoud Abu Watfa’s bilingual professional portfolio.",
       },
       { name: "author", content: "Baraa Mahmoud Abu Watfa" },
-      { property: "og:title", content: "Baraa — Software Engineering & Quality Assurance" },
+      { property: "og:title", content: "Baraa — AI Automation Developer & Software Engineer" },
       {
         property: "og:description",
         content: "Baraa Mahmoud Abu Watfa’s bilingual professional portfolio.",
@@ -130,6 +133,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange((event) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      router.invalidate();
+      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+    });
+    return () => data.subscription.unsubscribe();
+  }, [router, queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>
